@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="auth.css" />
+  </head>
+  <body>
+    <div class="lds-roller">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <!-- Login Form -->
+    <div class="form-modal">
+      <div class="form-toggle">
+        <button id="login-toggle" onclick="toggleLogin()">log in</button>
+        <button id="signup-toggle" onclick="toggleSignup()">sign up</button>
+      </div>
+
+      <div id="login-form">
+        <form>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter Emails"
+          />
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Enter Password"
+          />
+          <div class="Credentials">
+            <!-- Credentials_heading set by javascript -->
+            <h4 class="Credentials_heading">Credentials</h4>
+          </div>
+          <button type="button" class="btn login login-btn">login</button>
+          <!-- <p><a href="javascript:void(0)">Forgotten account</a></p> -->
+        </form>
+      </div>
+
+      <div id="signup-form">
+        <form action="https://multshare.herokuapp.com/register" method="POST">
+          <input type="email" name="email" placeholder="Enter your email" />
+          <input type="text" name="username" placeholder="Choose username" />
+          <input
+            type="password"
+            name="password"
+            placeholder="Create password"
+          />
+          <button type="submit" class="btn signup" disabled>
+            create account
+          </button>
+          <p>
+            Clicking <strong>create account</strong> means that you are agree to
+            our <a href="javascript:void(0)">terms of services</a>.
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="auth.js"></script>
+  </body>
+</html>

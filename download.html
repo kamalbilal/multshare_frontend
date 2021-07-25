@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>MultShare - File Hosting Service</title>
+    <link
+      rel="icon"
+      href="assets/icons/favicon.png"
+      type="image/png"
+      sizes="16x16"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="description"
+      content="MultShare Multipurpose  Landing Page Template Template"
+    />
+    <meta name="keywords" content="MultShare ,MultShare File Hosting" />
+    <link
+      href="assets/css/bootstrap.min.css"
+      rel="stylesheet"
+      type="text/css"
+      media="all"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800,900%7COpen+Sans:300,400,500"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/animate.css" />
+    <!-- Resource style -->
+    <link rel="stylesheet" href="assets/css/owl.carousel.css" />
+    <link rel="stylesheet" href="assets/css/owl.theme.css" />
+    <link rel="stylesheet" href="assets/css/ionicons.min.css" />
+    <!-- Resource style -->
+    <link
+      href="assets/css/stylesheet.css"
+      rel="stylesheet"
+      type="text/css"
+      media="all"
+    />
+
+    <style>
+      /* The Essential flexbox rules */
+
+      .flex-container {
+        display: flex;
+        margin-top: 100px;
+        text-align: center;
+      }
+      .ad {
+        flex: 0 1 140px; /* Flex-grow: 0, Don't grow on resize and fixed width of 140px */
+      }
+      .center-content {
+        flex: 1; /* Grow when the ads are removed */
+        /* text-align: center; */
+      }
+      .padding {
+        padding: 20px;
+      }
+      .modified-date {
+        margin-bottom: 50px;
+      }
+      button.download {
+        background-color: black;
+        outline: none;
+        border: none;
+        padding: 5px 12px;
+        border-radius: 7px;
+        color: white;
+      }
+    </style>
+  </head>
+  <body class="boxed-layout">
+    <div class="wrapper">
+      <!-- Navbar Section -->
+      <nav
+        class="
+          navbar navbar-expand-md navbar-light
+          bg-light
+          fixed-top
+          wt-border
+        "
+      >
+        <div class="container">
+          <a class="navbar-brand" href="/index.html">MultShare</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto navbar-right">
+              <!--                             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#main">Product</a></li>
+ -->
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#features"
+                  >Features</a
+                >
+              </li>
+              <!--               <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#reviews">Reviews</a></li>
+ -->
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="/dmca.html">DMCA</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="/privacypolicy.html"
+                  >Privacy policy</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="/tos.html"
+                  >Term of service</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#faqs">FAQ</a>
+              </li>
+              <li>
+                <a
+                  class="btn-nav js-scroll-trigger authBtn"
+                  href="/files/auth.html"
+                  >Login/Sign-up</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- Navbar End -->
+
+      <!-- Main -->
+
+      <div class="flex-container">
+        <div class="ad"></div>
+        <div class="center-content">
+          <h2 class="filename padding"></h2>
+          <p class="size padding"></p>
+          <p class="modified-date padding"></p>
+          <button class="download">Download</button>
+        </div>
+        <div class="ad"></div>
+      </div>
+    </div>
+    <!-- Wrapper -->
+    <script>
+      const frontendUrl = "https://multshareapp.herokuapp.com/files";
+      const ApiUrl = "https://multshare.herokuapp.com";
+
+      const filename = document.querySelector(".filename");
+      const size = document.querySelector(".size");
+      const date = document.querySelector(".modified-date");
+      const downloadBtn = document.querySelector(".download");
+
+      const myTestURLString = window.location.href;
+      const myURLObj = new URL(myTestURLString);
+      const id = myURLObj.searchParams.get("id");
+      console.log(id);
+
+      //bytes to gb converter
+      function formatBytes(a, b = 2, k = 1024) {
+        with (Math) {
+          let d = floor(log(a) / log(k));
+          return 0 == a
+            ? "0 Bytes"
+            : parseFloat((a / pow(k, d)).toFixed(max(0, b))) +
+                " " +
+                ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"][d];
+        }
+      }
+
+      var result;
+
+      async function getFileData(url) {
+        try {
+          const response = await fetch(url, {
+            method: "GET",
+          });
+
+          var data = await response.json();
+          console.log(data);
+          result = data;
+          if (data.error) {
+            if (data.error === "file is removed by owner") {
+              document.cookie = "file_download=" + "123";
+              downloadBtn.style.display = "none";
+
+              return (filename.innerHTML = "File is removed by owner");
+            } else if (data.error === "file not found") {
+              document.cookie = "file_download=" + "123";
+              downloadBtn.style.display = "none";
+
+              return (filename.innerHTML = "File not found");
+            } else if (data.error === "file is removed by dmca") {
+              document.cookie = "file_download=" + "123";
+              downloadBtn.style.display = "none";
+
+              return (filename.innerHTML = "File is removed by dmca");
+            }
+          }
+          document.cookie = "file_download=" + data.cookie;
+          filename.innerHTML = "Filename: " + data.originalfilename;
+          size.innerHTML = "Size: " + formatBytes(data.size);
+          date.innerHTML = "Modified date: " + data.modifieddate;
+          return data;
+          console.log(data);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      if (id) {
+        getFileData(ApiUrl + "/file/" + id);
+        downloadBtn.addEventListener("click", () => {
+          window.open(
+            ApiUrl + "/file/download/" + result.file_id + "/" + document.cookie
+          );
+        });
+      }
+    </script>
+  </body>
+</html>
