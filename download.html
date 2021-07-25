@@ -152,6 +152,39 @@
       const frontendUrl = "https://multshareapp.herokuapp.com/files";
       const ApiUrl = "https://multshare.herokuapp.com";
 
+      // Check Authentication
+
+      const authBtn = document.querySelector(".authBtn");
+      const authBtn2 = document.querySelector(".authBtn2");
+
+      document.addEventListener("DOMContentLoaded", () => {
+        async function getapi(url) {
+          // alert("Dom");
+          const cookie = document.cookie;
+          // Storing response
+          const response = await fetch(url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify({ cookie }),
+          });
+          // Storing data in form of JSON
+          var data = await response.json();
+          console.log(data);
+          if (data.cookie === "valid") {
+            //   window.location.replace(frontendUrl + "/index.html");
+            authBtn.innerHTML = "My Account";
+            authBtn.setAttribute("href", frontendUrl + "/index.html");
+          }
+        }
+
+        //calling fetch function
+        getapi(ApiUrl + "/CheckCookie");
+      });
+      // Check Authentication end
+
       const filename = document.querySelector(".filename");
       const size = document.querySelector(".size");
       const date = document.querySelector(".modified-date");
