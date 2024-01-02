@@ -1,5 +1,5 @@
-const ApiUrl = "https://multshare.herokuapp.com";
-const frontendUrl = "https://multshareapp.herokuapp.com/files";
+const ApiUrl = "http://localhost:80";
+const frontendUrl = "https://127.0.0.1:5500/files";
 
 const authBtn = document.querySelector(".authBtn");
 const authBtn2 = document.querySelector(".authBtn2");

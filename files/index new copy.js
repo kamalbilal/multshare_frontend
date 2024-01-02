@@ -1,5 +1,5 @@
-const frontendUrl = "https://multshareapp.herokuapp.com";
-const ApiUrl = "https://multshare.herokuapp.com";
+const frontendUrl = "https://127.0.0.1:5500";
+const ApiUrl = "http://localhost:80";
 const acceptExtentions = [
   "7z",
   "a",
@@ -685,9 +685,9 @@ var stopWaiting = false;
 const uploadFiles = (() => {
   const fileRequests = new WeakMap();
   const ENDPOINTS = {
-    UPLOAD: "https://multshare.herokuapp.com/upload",
-    UPLOAD_STATUS: "https://multshare.herokuapp.com/upload/status",
-    UPLOAD_REQUEST: "https://multshare.herokuapp.com/upload/request",
+    UPLOAD: "http://localhost:80/upload",
+    UPLOAD_STATUS: "http://localhost:80/upload/status",
+    UPLOAD_REQUEST: "http://localhost:80/upload/request",
   };
   const defaultOptions = {
     url: ENDPOINTS.UPLOAD,
